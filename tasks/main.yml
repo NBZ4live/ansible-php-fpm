@@ -1,2 +1,7 @@
 ---
-# tasks file for php-fpm
+
+- name: Install the php packages
+  apt: name={{ item }} state=present update_cache=yes
+  with_items: apt_packages
+  enviroment: env
+  when: ansible_os_family == "Debian"
