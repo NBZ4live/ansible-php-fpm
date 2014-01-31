@@ -3,7 +3,7 @@
 - name: Install the php packages
   apt: name={{ item }} state=present update_cache=yes
   with_items: apt_packages
-  enviroment: env
+  environment: env
   when: ansible_os_family == "Debian"
 
 - name: Copy the PHP configuration file
