@@ -103,3 +103,8 @@ php_config:
     soap.wsdl_cache_limit: "5"
   ldap:
     ldap.max_links: "-1"
+
+fpm_config:
+  pid: "/var/run/php5-fpm.pid"
+  error_log: "/var/log/php5-fpm.log"
+  include: "/etc/php5/fpm/pool.d/*.conf"
