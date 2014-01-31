@@ -5,3 +5,6 @@
   with_items: apt_packages
   enviroment: env
   when: ansible_os_family == "Debian"
+
+- name: Copy the PHP configuration file
+  template: src=php.ini.j2 dest=/etc/php5/fpm/php.ini

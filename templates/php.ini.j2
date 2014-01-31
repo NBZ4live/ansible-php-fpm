@@ -1,0 +1,8 @@
+#{{ ansible_managed }}
+
+{% for section,directives in php_config.iteritems() %}
+[{{ section }}]
+{% for directive,value in directives.iteritems() %}
+{{ directive }} = {{ value }}
+{% endfor %}
+{% endfor %}
