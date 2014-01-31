@@ -8,7 +8,7 @@ php_config:
     output_buffering: "4096"
     serialize_precision: "17"
     disable_functions: >
-      pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl_wexitstatus,pcntl_wtermsig,pcntl_wstopsig,pcntl_signal,pcntl_signal_dispatch,pcntl_get_last_error,pcntl_strerror,pcntl_sigprocmask,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_exec,pcntl_getpriority,pcntl_setpriority,
+      "pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl_wexitstatus,pcntl_wtermsig,pcntl_wstopsig,pcntl_signal,pcntl_signal_dispatch,pcntl_get_last_error,pcntl_strerror,pcntl_sigprocmask,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_exec,pcntl_getpriority,pcntl_setpriority,"
     zend.enable_gc: "1"
     expose_php: "1"
     max_execution_time: "30"
@@ -48,9 +48,9 @@ php_config:
     ibase.allow_persistent: "1"
     ibase.max_persistent: "-1"
     ibase.max_links: "-1"
-    ibase.timestampformat: %Y-%m-%d %H:%M:%S
-    ibase.dateformat: %Y-%m-%d
-    ibase.timeformat: %H:%M:%S
+    ibase.timestampformat: "%Y-%m-%d %H:%M:%S"
+    ibase.dateformat: "%Y-%m-%d"
+    ibase.timeformat: "%H:%M:%S"
   MySQL:
     mysql.allow_local_infile: "1"
     mysql.allow_persistent: "1"
@@ -77,19 +77,19 @@ php_config:
     sybct.min_server_severity: "10"
     sybct.min_client_severity: "10"
   Session:
-    session.save_handler: files
+    session.save_handler: "files"
     session.use_cookies: "1"
     session.use_only_cookies: "1"
-    session.name: PHPSESSID
-    session.cookie_path: /
-    session.serialize_handler: php
+    session.name: "PHPSESSID"
+    session.cookie_path: "/"
+    session.serialize_handler: "php"
     session.gc_divisor: "1000"
     session.gc_maxlifetime: "1440"
-    session.cache_limiter: nocache
+    session.cache_limiter: "nocache"
     session.cache_expire: "180"
     session.hash_bits_per_character: "5"
     url_rewriter.tags: >
-      a=href,area=href,frame=src,input=src,form=fakeentry
+      "a=href,area=href,frame=src,input=src,form=fakeentry"
   MSSQL:
     mssql.allow_persistent: "1"
     mssql.max_persistent: "-1"
@@ -98,7 +98,7 @@ php_config:
     mssql.min_message_severity: "10"
   soap:
     soap.wsdl_cache_enabled: "1"
-    soap.wsdl_cache_dir: /tmp
+    soap.wsdl_cache_dir: "/tmp"
     soap.wsdl_cache_ttl: "86400"
     soap.wsdl_cache_limit: "5"
   ldap:
