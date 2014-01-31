@@ -1,7 +1,6 @@
 ;{{ ansible_managed }}
 
 [global]
-
-{% for k,v in fpm_config.iteritems() %}
-{{ k }} = {{ v }}
-{% endfor %}
+pid = {{ fpm_config.pid }}
+error_log = {{ fpm_config.error_log }}
+include = {{ fpm_config.include }}
