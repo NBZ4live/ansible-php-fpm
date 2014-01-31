@@ -3,4 +3,30 @@
 [global]
 pid = {{ fpm_config.pid }}
 error_log = {{ fpm_config.error_log }}
-include = {{ fpm_config.include }}
+syslog.facility = {{ syslog.facility }}
+syslog.ident = {{ syslog.ident }}
+log_level = {{ log_level }}
+emergency_restart_threshold = {{ emergency_restart_threshold }}
+emergency_restart_interval = {{ emergency_restart_interval }}
+process_control_timeout = {{ process_control_timeout }}
+process.max = {{ process.max }}
+
+{% if process.priority is defined %}
+process.priority = {{ process.priority }}
+{% endif %}
+
+daemonize = {{ daemonize }}
+
+{% if rlimit_files is defined %}
+rlimit_files = {{ rlimit_files }}
+{% endif %}
+
+{% if rlimit_core is defined %}
+rlimit_core = {{ rlimit_core }}
+{% endif %}
+
+{% if events.mechanism is defined %}
+events.mechanism = {{ events.mechanism }}
+{% endif %}
+
+include={{ fpm_config.include }}
