@@ -7,9 +7,9 @@
   when: ansible_os_family == "Debian"
 
 - name: Copy the PHP configuration file
-  template: src=php.ini.j2 dest=/etc/php5/fpm/php.ini
+  template: src=php.ini.j2 dest=/etc/php5/fpm/php.ini backup=yes
 
 - name: Copy the FPM configuration file
-  template: src=php-fpm.conf.j2 dest=/etc/php5/fpm/php-fpm.conf
+  template: src=php-fpm.conf.j2 dest=/etc/php5/fpm/php-fpm.conf backup=yes
   notify: 
    - restart php-fpm
