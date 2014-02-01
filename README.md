@@ -16,6 +16,11 @@ Role Variables
 The variables that can be passed to this role and a brief description about
 them are as follows.
 
+    # A list of packages to be installed by the apt module
+    apt_packages:
+     - php5-cli
+     - php5-fpm
+     
     # A list of the php.ini sections with directives.
     # Note that any valid php.ini directive can be added here.
     # (see the http://php.net documentation for details.)
