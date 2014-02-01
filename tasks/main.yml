@@ -8,8 +8,17 @@
 
 - name: Copy the PHP configuration file
   template: src=php.ini.j2 dest=/etc/php5/fpm/php.ini backup=yes
+  notify: 
+   - restart php-fpm
 
 - name: Copy the FPM configuration file
   template: src=php-fpm.conf.j2 dest=/etc/php5/fpm/php-fpm.conf backup=yes
+  notify: 
+   - restart php-fpm
+
+- name: Copy the POOL configurations
+  template: src=pool.conf.j2 dest=/etc/php5/fpm/pool.d/{{ item['pool']['name'] }}.conf backup=yes
+  with_items: fpm_pools
+  when: fpm_pools|lower != 'none'
   notify: 
    - restart php-fpm

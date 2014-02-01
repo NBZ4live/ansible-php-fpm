@@ -1,4 +1,18 @@
 ---
+fpm_pools:
+ - pool:
+    name: foo
+    vars:
+     - user = www-data
+     - group = www-data
+     - listen = 8000
+     - pm = dynamic
+     - pm.max_children = 5
+     - pm.start_servers = 2
+     - pm.min_spare_servers = 1
+     - pm.max_spare_servers = 3
+     - chdir = /
+
 php_config:
   PHP:
     engine: "1"
