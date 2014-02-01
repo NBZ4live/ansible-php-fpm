@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/NBZ4live/ansible-php-fpm.png?branch=master)](https://travis-ci.org/NBZ4live/ansible-php-fpm)
+
 php-fpm
 ========
 
