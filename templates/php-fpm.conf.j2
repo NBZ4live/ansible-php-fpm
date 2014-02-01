@@ -1,32 +1,32 @@
 ;{{ ansible_managed }}
 
 [global]
-pid = {{ fpm_config.pid }}
-error_log = {{ fpm_config.error_log }}
-syslog.facility = {{ syslog.facility }}
-syslog.ident = {{ syslog.ident }}
-log_level = {{ log_level }}
-emergency_restart_threshold = {{ emergency_restart_threshold }}
-emergency_restart_interval = {{ emergency_restart_interval }}
-process_control_timeout = {{ process_control_timeout }}
-process.max = {{ process.max }}
+pid = {{ fpm_config['pid'] }}
+error_log = {{ fpm_config['error_log'] }}
+syslog.facility = {{ fpm_config['syslog.facility'] }}
+syslog.ident = {{ fpm_config['syslog.ident'] }}
+log_level = {{ fpm_config['log_level'] }}
+emergency_restart_threshold = {{ fpm_config['emergency_restart_threshold'] }}
+emergency_restart_interval = {{ fpm_config['emergency_restart_interval'] }}
+process_control_timeout = {{ fpm_config['process_control_timeout'] }}
+process.max = {{ fpm_config['process.max'] }}
 
-{% if process.priority is defined %}
-process.priority = {{ process.priority }}
+{% if fpm_config['process.priority'] is defined %}
+process.priority = {{ fpm_config['process.priority'] }}
 {% endif %}
 
-daemonize = {{ daemonize }}
+daemonize = {{ fpm_config['daemonize'] }}
 
-{% if rlimit_files is defined %}
-rlimit_files = {{ rlimit_files }}
+{% if fpm_config['rlimit_files'] is defined %}
+rlimit_files = {{ fpm_config['rlimit_files'] }}
 {% endif %}
 
-{% if rlimit_core is defined %}
-rlimit_core = {{ rlimit_core }}
+{% if fpm_config['rlimit_core'] is defined %}
+rlimit_core = {{ fpm_config['rlimit_core'] }}
 {% endif %}
 
-{% if events.mechanism is defined %}
-events.mechanism = {{ events.mechanism }}
+{% if fpm_config['events.mechanism'] is defined %}
+events.mechanism = {{ fpm_config['events.mechanism'] }}
 {% endif %}
 
-include={{ fpm_config.include }}
+include={{ fpm_config['include'] }}
