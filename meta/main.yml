@@ -4,14 +4,14 @@ galaxy_info:
   license: BSD
   min_ansible_version: 1.4
   platforms:
-  #- name: Ubuntu
-  #  versions:
+  - name: Ubuntu
+    versions:
   #  - all
   #  - lucid
   #  - maverick
   #  - natty
   #  - oneiric
-  #  - precise
+    - precise
   #  - quantal
   #  - raring
   #  - saucy
@@ -24,7 +24,7 @@ galaxy_info:
   #  - squeeze
     - wheezy
   categories:
-  - development
+  #- development
   #- monitoring
   #- networking
   #- packaging
