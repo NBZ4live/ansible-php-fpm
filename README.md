@@ -21,20 +21,29 @@ them are as follows.
      - php5-cli
      - php5-fpm
      
-    # A list of the php.ini sections with directives.
+    # A list of the php.ini directives with values and sections.
     # Note that any valid php.ini directive can be added here.
     # (see the http://php.net documentation for details.)
     # 
     php_config:
-      PHP:
-        engine: "1"
-        short_open_tag: "1"
-        date.timezone: "Europe/Berlin"
-        ...
-      CLI Server:
-        cli_server.color: "1"
-      Pdo_mysql:
-        pdo_mysql.cache_size: "2000"
+      # PHP section directives
+      - option: "engine"
+        section: "PHP"
+        value: "1"
+      - option: "error_reporting"
+        section: "PHP"
+        value: "E_ALL & ~E_DEPRECATED & ~E_STRICT"
+      - option: "date.timezone"
+        section: "PHP"
+        value: "Europe/Berlin"
+      # soap section directives
+      - option: "soap.wsdl_cache_dir"
+        section: "soap"
+        value: "/tmp"
+      # Pdo_mysql section directives
+      - option: "pdo_mysql.cache_size"
+        section: "Pdo_mysql"
+        value: "2000"
       ...
 
     # A list of hashs that define fpm configuration
