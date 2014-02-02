@@ -15,7 +15,8 @@
   tags: [configuration,php,fpm]
 
 - name: Copy the FPM configuration file
-  template: src=php-fpm.conf.j2 dest=/etc/php5/fpm/php-fpm.conf backup=yes
+  ini_file: dest=/etc/php5/fpm/php-fpm.conf section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" backup=yes
+  with_items: fpm_config
   notify: 
    - restart php-fpm
   tags: [configuration,php,fpm]
