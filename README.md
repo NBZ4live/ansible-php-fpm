@@ -48,17 +48,12 @@ them are as follows.
 
     # A list of hashs that define fpm configuration
     fpm_config:
-      pid: "/var/run/php5-fpm.pid"
-      error_log: "/var/log/php5-fpm.log"
-      syslog.facility: "daemon"
-      syslog.ident: "php-fpm"
-      log_level: "notice"
-      emergency_restart_threshold: "0"
-      emergency_restart_interval: "0"
-      process_control_timeout: "0"
-      process.max: "0"
-      daemonize: "yes"
-      include: "/etc/php5/fpm/pool.d/*.conf"
+     - option: "log_level"
+       section: "global"
+       value: "notice"
+     - option: "syslog.facility"
+       section: "global"
+       value: "daemon"
 
     # A list of hashs that define the pools for php-fpm,
     # as with the php.ini directives. Any valid server parameters
