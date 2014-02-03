@@ -21,6 +21,12 @@
    - restart php-fpm
   tags: [configuration,php,fpm]
 
+- name: Delete the default POOL configuration file
+  file: path=/etc/php5/fpm/pool.d/www.conf state=absent
+  notify: 
+   - restart php-fpm
+  tags: [configuration,php,fpm]
+
 - name: Copy the POOL configurations
   template: src=pool.conf.j2 dest=/etc/php5/fpm/pool.d/{{ item['pool']['name'] }}.conf backup=yes
   with_items: fpm_pools
@@ -28,3 +34,13 @@
   notify: 
    - restart php-fpm
   tags: [configuration,php,fpm]
+
+- name: Check php-fpm syntax of configuration files
+  shell: php5-fpm -t
+  register: result
+  changed_when: "result.rc != 0"
+  tags: [configuration,php,fpm]
+
+- name: Start the php5-fpm service
+  service: name=php5-fpm state=started enabled=yes
+  tags: [service,php,fpm]
