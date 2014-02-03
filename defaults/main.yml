@@ -25,9 +25,6 @@ php_config:
    value: "1"
 
 fpm_config:
- - option: "log_level"
+ - option: "error_log"
    section: "global"
-   value: "notice"
- - option: "syslog.facility"
-   section: "global"
-   value: "daemon"
+   value: "/var/log/php5-fpm.log"
