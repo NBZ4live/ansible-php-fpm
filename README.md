@@ -86,7 +86,3 @@ Author Information
 ------------------
 
 Sergey Fayngold
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/NBZ4live/ansible-php-fpm/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
