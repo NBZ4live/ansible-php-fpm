@@ -1,0 +1,9 @@
+---
+php_ini: /etc/php.ini
+php_fpm_conf: /etc/php-fpm.conf
+pool_d: /etc/php-fpm.d/
+
+binary_name: php-fpm
+service_name: php-fpm
+
+pid_file: /var/run/php-fpm/php-fpm.pid

@@ -1,6 +1,6 @@
 ---
 - name: restart php-fpm
-  service: name=php5-fpm state=restarted 
+  service: name={{service_name}} state=restarted 
 
 - name: reload php-fpm
-  service: name=php5-fpm state=reloaded
+  service: name={{service_name}} state=reloaded

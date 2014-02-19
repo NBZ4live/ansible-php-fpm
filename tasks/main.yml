@@ -1,34 +1,48 @@
 ---
 
-- name: Install the php packages
+- name: Add the OS specific varibles
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install the php packages (APT)
   apt: name={{ item }} state=present update_cache=yes
   with_items: apt_packages
   environment: env
   when: ansible_os_family == "Debian"
   tags: [packages,php,fpm]
 
+- name: Install the php packages (YUM)
+  yum: name={{ item }} state=present
+  with_items: yum_packages
+  environment: env
+  when: ansible_os_family == "RedHat"
+  tags: [packages,php,fpm]
+
 - name: Copy the PHP configuration file
-  ini_file: dest=/etc/php5/fpm/php.ini section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" backup=yes
+  ini_file: dest={{ php_ini }} section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" backup=yes
   with_items: php_config
   notify: 
    - restart php-fpm
   tags: [configuration,php,fpm]
 
+- name: Copy default FPM configuration file
+  template: dest={{ php_fpm_conf }} src=php-fpm.conf.j2
+  tags: [configuration,php,fpm]
+
 - name: Copy the FPM configuration file
-  ini_file: dest=/etc/php5/fpm/php-fpm.conf section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" backup=yes
+  ini_file: dest={{ php_fpm_conf }} section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" backup=yes
   with_items: fpm_config
   notify: 
    - restart php-fpm
   tags: [configuration,php,fpm]
 
 - name: Delete the default POOL configuration file
-  file: path=/etc/php5/fpm/pool.d/www.conf state=absent
+  file: path={{pool_d}}www.conf state=absent
   notify: 
    - restart php-fpm
   tags: [configuration,php,fpm]
 
 - name: Copy the POOL configurations
-  template: src=pool.conf.j2 dest=/etc/php5/fpm/pool.d/{{ item['pool']['name'] }}.conf backup=yes
+  template: src=pool.conf.j2 dest={{ pool_d }}{{ item['pool']['name'] }}.conf backup=yes
   with_items: fpm_pools
   when: fpm_pools|lower != 'none'
   notify: 
@@ -36,11 +50,11 @@
   tags: [configuration,php,fpm]
 
 - name: Check php-fpm syntax of configuration files
-  shell: php5-fpm -t
+  shell: "{{binary_name}} -t"
   register: result
   changed_when: "result.rc != 0"
   tags: [configuration,php,fpm]
 
 - name: Start the php5-fpm service
-  service: name=php5-fpm state=started enabled=yes
+  service: name={{ service_name }} state=started enabled=yes
   tags: [service,php,fpm]
