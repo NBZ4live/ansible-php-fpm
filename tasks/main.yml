@@ -35,12 +35,6 @@
    - restart php-fpm
   tags: [configuration,php,fpm]
 
-- name: Delete the default POOL configuration file
-  file: path={{pool_d}}www.conf state=absent
-  notify: 
-   - restart php-fpm
-  tags: [configuration,php,fpm]
-
 - name: Copy the POOL configurations
   template: src=pool.conf.j2 dest={{ pool_d }}{{ item['pool']['name'] }}.conf backup=yes
   with_items: fpm_pools
