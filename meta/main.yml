@@ -4,6 +4,9 @@ galaxy_info:
   license: BSD
   min_ansible_version: 1.4
   platforms:
+  - name: EL
+    versions:
+    - 6
   - name: Ubuntu
     versions:
   #  - all

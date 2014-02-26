@@ -26,6 +26,7 @@
 
 - name: Copy default FPM configuration file
   template: dest={{ php_fpm_conf }} src=php-fpm.conf.j2
+  when: ansible_os_family == "RedHat"
   tags: [configuration,php,fpm]
 
 - name: Copy the FPM configuration file
@@ -33,6 +34,11 @@
   with_items: fpm_config
   notify: 
    - restart php-fpm
+  tags: [configuration,php,fpm]
+
+- name: Delete the default POOL configuration file
+  file: {{ pool_d }}www.conf state=absent
+  when: fpm_delete_www_pool == "yes"
   tags: [configuration,php,fpm]
 
 - name: Copy the POOL configurations

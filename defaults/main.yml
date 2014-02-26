@@ -13,6 +13,8 @@ fpm_pools:
      - pm.max_spare_servers = 3
      - chdir = /
 
+fpm_delete_www_pool: yes
+
 php_config:
  - option: "engine"
    section: "PHP"
