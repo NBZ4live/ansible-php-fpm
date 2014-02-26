@@ -37,8 +37,8 @@
   tags: [configuration,php,fpm]
 
 - name: Delete the default POOL configuration file
-  file: {{ pool_d }}www.conf state=absent
-  when: fpm_delete_www_pool == "yes"
+  file: {{ pool_d }}{{ fpm_default_pool.name }} state=absent
+  when: fpm_default_pool.delete == "yes"
   tags: [configuration,php,fpm]
 
 - name: Copy the POOL configurations
