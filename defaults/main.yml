@@ -1,23 +1,27 @@
 ---
-fpm_pools:
- - pool:
-    name: foo
-    vars:
-     - user = www-data
-     - group = www-data
-     - listen = 8000
-     - pm = dynamic
-     - pm.max_children = 5
-     - pm.start_servers = 2
-     - pm.min_spare_servers = 1
-     - pm.max_spare_servers = 3
-     - chdir = /
+php_fpm_pools:
+ - name: foo
+   user: www-data
+   group: www-data
+   listen: 8000
+   pm: dynamic
+   pm.max_children: 5
+   pm.start_servers: 2
+   pm.min_spare_servers: 1
+   pm.max_spare_servers: 3
+   chdir: /
 
-fpm_default_pool:
+php_fpm_apt_packages:
+  - php5-fpm
+
+php_fpm_yum_packages:
+  - php-fpm
+
+php_fpm_default_pool:
   delete: yes
   name: www.conf
 
-php_config:
+php_fpm_ini:
  - option: "engine"
    section: "PHP"
    value: "1"
@@ -28,7 +32,7 @@ php_config:
    section: "ldap"
    value: "1"
 
-fpm_config:
+php_fpm_config:
  - option: "error_log"
    section: "global"
    value: "/var/log/php5-fpm.log"

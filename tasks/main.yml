@@ -5,56 +5,56 @@
 
 - name: Install the php packages (APT)
   apt: name={{ item }} state=present update_cache=yes
-  with_items: apt_packages
+  with_items: php_fpm_apt_packages
   environment: env
   when: ansible_os_family == "Debian"
   tags: [packages,php,fpm]
 
 - name: Install the php packages (YUM)
   yum: name={{ item }} state=present
-  with_items: yum_packages
+  with_items: php_fpm_yum_packages
   environment: env
   when: ansible_os_family == "RedHat"
   tags: [packages,php,fpm]
 
 - name: Copy the PHP configuration file
-  ini_file: dest={{ php_ini }} section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" backup=yes
-  with_items: php_config
+  ini_file: dest={{ php_fpm_ini_path }} section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" backup=yes
+  with_items: php_fpm_ini
   notify: 
    - restart php-fpm
   tags: [configuration,php,fpm]
 
 - name: Copy default FPM configuration file
-  template: dest={{ php_fpm_conf }} src=php-fpm.conf.j2
+  template: dest={{ php_fpm_config_path }} src=php-fpm.conf.j2
   when: ansible_os_family == "RedHat"
   tags: [configuration,php,fpm]
 
 - name: Copy the FPM configuration file
-  ini_file: dest={{ php_fpm_conf }} section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" backup=yes
-  with_items: fpm_config
+  ini_file: dest={{ php_fpm_config_path }} section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" backup=yes
+  with_items: php_fpm_config
   notify: 
    - restart php-fpm
   tags: [configuration,php,fpm]
 
 - name: Delete the default POOL configuration file
-  file: path={{ pool_d }}{{ fpm_default_pool.name }} state=absent
-  when: fpm_default_pool.delete == "yes"
+  file: path={{ php_fpm_pool_d }}/{{ php_fpm_default_pool.name }} state=absent
+  when: php_fpm_default_pool.delete
   tags: [configuration,php,fpm]
 
 - name: Copy the POOL configurations
-  template: src=pool.conf.j2 dest={{ pool_d }}{{ item['pool']['name'] }}.conf backup=yes
-  with_items: fpm_pools
-  when: fpm_pools|lower != 'none'
+  template: src=pool.conf.j2 dest={{ php_fpm_pool_d }}/{{ item['name'] }}.conf backup=yes
+  with_items: php_fpm_pools
+  when: php_fpm_pools|lower != 'none'
   notify: 
    - restart php-fpm
   tags: [configuration,php,fpm]
 
 - name: Check php-fpm syntax of configuration files
-  shell: "{{binary_name}} -t"
+  shell: "{{ php_fpm_binary_name }} -t"
   register: result
   changed_when: "result.rc != 0"
   tags: [configuration,php,fpm]
 
 - name: Start the php5-fpm service
-  service: name={{ service_name }} state=started enabled=yes
+  service: name={{ php_fpm_service_name }} state=started enabled=yes
   tags: [service,php,fpm]
