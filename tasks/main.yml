@@ -1,7 +1,13 @@
 ---
 
 - name: Add the OS specific varibles
-  include_vars: "{{ ansible_os_family }}.yml"
+  include_vars: "{{ ansible_os_family }}.yml" 
+
+- name: Create www-data Group
+  group: name=www-data state=present
+
+- name: Create www-data User
+  user: name=www-data comment="www-data" group=www-data
 
 - name: Install the php packages (APT)
   apt: name={{ item }} state=present update_cache=yes
