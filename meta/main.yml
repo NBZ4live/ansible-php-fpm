@@ -1,7 +1,7 @@
 ---
 galaxy_info:
-  author: Pierre Buyle
-  company: Phéromone
+  author: Sergey Fayngold
+  company: My.com B.V.
   license: BSD
   min_ansible_version: 1.4
   platforms:

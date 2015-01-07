@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/NBZ4live/ansible-php-fpm.png?branch=master)](https://travis-ci.org/NBZ4live/ansible-php-fpm)
+
 php-fpm
 ========
 
@@ -16,6 +18,8 @@ The role uses the following variables:
  - **php_fpm_pools**: The list a pools for php-fpm, each pools is a hash with
    a name entry (used for filename), all the other entries in the hash are pool
    directives (see http://php.net/manual/en/install.fpm.configuration.php).
+ - **php_fpm_pool_defaults**: A list of default directives used for all php-fpm pools
+   (see http://php.net/manual/en/install.fpm.configuration.php).
  - **php_fpm_apt_packages**: The list of packages to be installed by the
   ```apt```, defaults to ```[php5-fpm]```.
    module.
