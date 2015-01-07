@@ -42,27 +42,22 @@ Example usages
 --------------
 
     - role: php-fpm
+      php_fpm_pool_defaults:
+        pm: dynamic
+        pm.max_children: 5
+        pm.start_servers: 2
+        pm.min_spare_servers: 1
+        pm.max_spare_servers: 3
       php_fpm_pools:
        - name: foo
          user: www-data
          group: www-data
          listen: 8000
-         pm: dynamic
-         pm.max_children: 5
-         pm.start_servers: 2
-         pm.min_spare_servers: 1
-         pm.max_spare_servers: 3
          chdir: /
        - name: bar
          user: www-data
          group: www-data
          listen: 8001
-         pm: dynamic
-         pm.max_children: 5
-         pm.start_servers: 2
-         pm.min_spare_servers: 1
-         pm.max_spare_servers: 3
-         chdir: /
        php_fpm_ini:
        # PHP section directives
        - option: "engine"
@@ -98,5 +93,5 @@ BSD
 Author Information
 ------------------
 
-- Pierre Buyle <buyle@pheromone.ca>
 - Sergey Fayngold
+- Pierre Buyle <buyle@pheromone.ca>
