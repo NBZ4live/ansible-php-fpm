@@ -2,10 +2,10 @@
 
 [{{ item.name }}]
 {% for directive, value in item.iteritems() if directive != "name" %}
-  {{ directive }} = {{ value }};
+  {{ directive }} = {{ value }}
 {% endfor %} 
 
 ; Defaults
 {% for directive, value in php_fpm_pool_defaults.iteritems() %}
-  {{ directive }} = {{ value }};
+  {{ directive }} = {{ value }}
 {% endfor %}
