@@ -18,7 +18,12 @@
   tags: [packages,php,fpm]
 
 - name: Copy the PHP configuration file
-  ini_file: dest={{ php_fpm_ini_path }} section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" backup=yes
+  ini_file: >
+    dest={{ php_fpm_ini_path }}
+    section="{{ item.section }}"
+    option="{{ item.option }}"
+    value="{{ item.value }}"
+    backup=yes
   with_items: php_fpm_ini
   notify: 
    - restart php-fpm
@@ -30,19 +35,29 @@
   tags: [configuration,php,fpm]
 
 - name: Copy the FPM configuration
-  ini_file: dest={{ php_fpm_config_path }} section="{{ item.section }}" option="{{ item.option }}" value="{{ item.value }}" backup=yes
+  ini_file: >
+    dest={{ php_fpm_config_path }}
+    section="{{ item.section }}"
+    option="{{ item.option }}"
+    value="{{ item.value }}"
+    backup=yes
   with_items: php_fpm_config
   notify: 
    - restart php-fpm
   tags: [configuration,php,fpm]
 
 - name: Delete the default POOL configuration file
-  file: path={{ php_fpm_pool_d }}/{{ php_fpm_default_pool.name }} state=absent
+  file: >
+    path={{ php_fpm_pool_d }}/{{ php_fpm_default_pool.name }}
+    state=absent
   when: php_fpm_default_pool.delete
   tags: [configuration,php,fpm]
 
 - name: Copy the POOL configurations
-  template: src=pool.conf.j2 dest={{ php_fpm_pool_d }}/{{ item['name'] }}.conf backup=yes
+  template: >
+    src=pool.conf.j2
+    dest={{ php_fpm_pool_d }}/{{ item['name'] }}.conf
+    backup=yes
   with_items: php_fpm_pools
   when: php_fpm_pools|lower != 'none'
   notify: 
