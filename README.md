@@ -38,7 +38,7 @@ The role uses the following variables:
      - **delete**: Set to a ```True``` value to delete the default pool.
      - **name**: The filename the default pool configuration file.
 
-Example usages
+Example configuration
 --------------
 
     - role: php-fpm
@@ -85,6 +85,28 @@ Example usages
          section: "global"
          value: "daemon"
 
+Example usage
+-------
+
+    ---
+    # file: task.yml
+    - hosts: all
+      roles:
+        - nbz4live.php-fpm
+        - {
+            role: nbz4live.php-fpm,
+            php_fpm_pools:[
+              {name: foo, user: www-data, group: www-data, listen: 8000, chdir: /}
+            ]
+          }
+        - role: php-fpm
+            php_fpm_pools:
+              - name: bar
+                user: www-data
+                group: www-data
+                listen: 9000
+                chdir: /
+        
 License
 -------
 
