@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/NBZ4live/ansible-php-fpm.png?branch=master)](https://travis-ci.org/NBZ4live/ansible-php-fpm)
+[![Build Status](http://img.shields.io/travis/NBZ4live/ansible-php-fpm.svg?style=flat)](https://travis-ci.org/NBZ4live/ansible-php-fpm) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-php--fpm-blue.svg?style=flat)](https://galaxy.ansible.com/list#/roles/304)
 
 php-fpm
 ========
