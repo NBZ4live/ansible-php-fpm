@@ -1,4 +1,6 @@
 ---
+apt_cache_valid_time: 86400
+
 php_fpm_pools:
  - name: foo
    user: www-data
