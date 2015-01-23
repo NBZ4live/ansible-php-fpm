@@ -1,11 +1,13 @@
 ;{{ ansible_managed }}
 
-[{{ item.name }}]
-{% for directive, value in item.iteritems() if directive != "name" %}
-  {{ directive }} = {{ value }}
-{% endfor %} 
 
+[{{ item.name }}]
 ; Defaults
 {% for directive, value in php_fpm_pool_defaults.iteritems() %}
+  {{ directive }} = {{ value }}
+{% endfor %}
+
+; Pool custom directives
+{% for directive, value in item.iteritems() if directive != "name" %}
   {{ directive }} = {{ value }}
 {% endfor %}
