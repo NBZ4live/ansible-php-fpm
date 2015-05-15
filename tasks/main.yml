@@ -50,6 +50,7 @@
     value="{{ item.value }}"
     backup=yes
   with_items: php_fpm_config
+  register: copy_fpm_config
   notify: 
    - restart php-fpm
   tags: [configuration,php,fpm]
@@ -61,6 +62,7 @@
     option=include
     state=absent
     backup=no
+  when: copy_fpm_config.changed
   notify:
    - restart php-fpm
   tags: [configuration,php,fpm]
@@ -73,6 +75,7 @@
     value="{{ php_fpm_pool_d }}/*.conf"
     state=present
     backup=no
+  when: copy_fpm_config.changed
   notify:
    - restart php-fpm
   tags: [configuration,php,fpm]
