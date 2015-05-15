@@ -54,6 +54,29 @@
    - restart php-fpm
   tags: [configuration,php,fpm]
 
+- name: Delete the include line from the ini file
+  ini_file: >
+    dest={{ php_fpm_config_path }}
+    section=global
+    option=include
+    state=absent
+    backup=no
+  notify:
+   - restart php-fpm
+  tags: [configuration,php,fpm]
+
+- name: Readd the include line to the ini file
+  ini_file: >
+    dest={{ php_fpm_config_path }}
+    section=global
+    option=include
+    value="{{ php_fpm_pool_d }}/*.conf"
+    state=present
+    backup=no
+  notify:
+   - restart php-fpm
+  tags: [configuration,php,fpm]
+
 - name: Delete the default POOL configuration file
   file: >
     path={{ php_fpm_pool_d }}/{{ php_fpm_default_pool.name }}
