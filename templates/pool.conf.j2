@@ -3,7 +3,7 @@
 
 [{{ item.name }}]
 
-{% for directive, value in ((php_fpm_pool_defaults.conf|default(dict())).items() + item.items()) if directive != "name" %}
+{% for directive, value in ((php_fpm_pool_defaults|default(dict())).items() + item.items()) if directive != "name" %}
 {% if value is mapping -%}
 {% for key, value2 in value.iteritems() %}
 {{ directive }}[{{ key }}] = {{ value2 }}
