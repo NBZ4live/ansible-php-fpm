@@ -17,11 +17,13 @@ The role uses the following variables:
 
  - **php_fpm_pools**: The list a pools for php-fpm, each pools is a hash with
    a name entry (used for filename), all the other entries in the hash are pool
-   directives (see http://php.net/manual/en/install.fpm.configuration.php).
+   directives (see http://php.net/manual/en/install.fpm.configuration.php). One
+   level dictionaries nesting is supported, to allow passing environment
+   variables and PHP settings as dictionaries.
  - **php_fpm_pool_defaults**: A list of default directives used for all php-fpm pools
    (see http://php.net/manual/en/install.fpm.configuration.php).
  - **php_fpm_apt_packages**: The list of packages to be installed by the
-  ```apt```, defaults to ```[php5-fpm]```.
+  ```apt``` module, defaults to ```[php5-fpm]```.
    module.
  - **php_fpm_yum_packages**: The list of packages to be installed by the
    ```yum``` module, defaults to ```[php-fpm]```.
@@ -32,8 +34,6 @@ The role uses the following variables:
      - **section**: Section name in INI file.
  - **php_fpm_config**: Customization for php-fpm's configuration file as a list
    of options.
- - **php_fpm_apt_packages**: The APT packages to install, defaults to ```[php5-fpm]```.
- - **php_fpm_yum_packages**: The Yum packages to install, defaults to ```[php-fpm]```.
  - **php_fpm_default_pool**:
      - **delete**: Set to a ```True``` value to delete the default pool.
      - **name**: The filename the default pool configuration file.
@@ -58,6 +58,12 @@ Example configuration
          user: www-data
          group: www-data
          listen: 8001
+         env:
+           PATH: "/usr/local/bin:/usr/bin:/bin"
+           TMPDIR: "/tmp"
+         php_admin_value:
+           sendmail_path: "/usr/sbin/sendmail -t -i -f www@my.domain.com"
+           error_log = "/var/log/fpm-bar.www.log"
        php_fpm_ini:
        # PHP section directives
        - option: "engine"
@@ -116,4 +122,4 @@ Author Information
 ------------------
 
 - Sergey Fayngold
-- Pierre Buyle <buyle@pheromone.ca>
+- Pierre Buyle <buyle@floedesign.ca>
