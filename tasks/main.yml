@@ -10,7 +10,7 @@
     update_cache=yes
     cache_valid_time={{ apt_cache_valid_time }}
   with_items: php_fpm_apt_packages
-  environment: env
+  environment: "{{ env }}"
   when: ansible_os_family == "Debian"
   notify:
      - restart php-fpm
@@ -19,7 +19,7 @@
 - name: Install the php packages (YUM)
   yum: name={{ item }} state=present
   with_items: php_fpm_yum_packages
-  environment: env
+  environment: "{{ env }}"
   when: ansible_os_family == "RedHat"
   notify:
      - restart php-fpm
@@ -33,7 +33,7 @@
     value="{{ item.value }}"
     backup=yes
   with_items: php_fpm_ini
-  notify: 
+  notify:
    - restart php-fpm
   tags: [configuration,php,fpm]
 
@@ -51,7 +51,7 @@
     backup=yes
   with_items: php_fpm_config
   register: copy_fpm_config
-  notify: 
+  notify:
    - restart php-fpm
   tags: [configuration,php,fpm]
 
@@ -94,7 +94,7 @@
     backup=yes
   with_items: php_fpm_pools
   when: php_fpm_pools|lower != 'none'
-  notify: 
+  notify:
    - restart php-fpm
   tags: [configuration,php,fpm]
 
