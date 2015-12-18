@@ -10,7 +10,7 @@ php_fpm_pools:
 
 php_fpm_pool_defaults:
   pm: dynamic
-  pm.max_children: 5
+  pm.max_children: "{{ ansible_processor_vcpus * 2 }}"
   pm.start_servers: 2
   pm.min_spare_servers: 1
   pm.max_spare_servers: 3
