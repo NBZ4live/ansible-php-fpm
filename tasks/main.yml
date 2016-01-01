@@ -90,9 +90,9 @@
 - name: Copy the POOL configurations
   template: >
     src=pool.conf.j2
-    dest={{ php_fpm_pool_d }}/{{ item['name'] }}.conf
+    dest={{ php_fpm_pool_d }}/{{ item }}.conf
     backup=yes
-  with_items: php_fpm_pools
+  with_items: php_fpm_pools.keys()
   when: php_fpm_pools|lower != 'none'
   notify:
    - restart php-fpm
