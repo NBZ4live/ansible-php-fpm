@@ -106,7 +106,16 @@ Example usage
                 group: www-data
                 listen: 9000
                 chdir: /
-        
+
+Attention
+-------
+The process manager configuration (pm, pm.max_children, pm.start_servers, pm.min_spare_servers, pm.max_spare_servers), 
+in the defaults, is only for testing. This values should always be calculated based on the used server resources 
+(hardware, number of pools, other software on the server).
+Please read the [documentation](http://php.net/manual/en/install.fpm.configuration.php#pm) for more information 
+about this directives or follow [this guide](http://myshell.co.uk/blog/2012/07/adjusting-child-processes-for-php-fpm-nginx/) 
+to calculate best values for your case.
+
 License
 -------
 
@@ -115,5 +124,5 @@ BSD
 Author Information
 ------------------
 
-- Sergey Fayngold
+- Sergey Fayngold <sergey@faynhost.com>
 - Pierre Buyle <buyle@pheromone.ca>
