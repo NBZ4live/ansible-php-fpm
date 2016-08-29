@@ -2,12 +2,13 @@
 
 
 [{{ item.name }}]
-; Defaults
-{% for directive, value in php_fpm_pool_defaults.iteritems() %}
-  {{ directive }} = {{ value }}
-{% endfor %}
 
-; Pool custom directives
-{% for directive, value in item.iteritems() if directive != "name" %}
-  {{ directive }} = {{ value }}
+{% for directive, value in ((php_fpm_pool_defaults|default(dict())).items() + item.items()) if directive != "name" %}
+{% if value is mapping -%}
+{% for key, value2 in value.iteritems() %}
+{{ directive }}[{{ key }}] = {{ value2 }}
+{% endfor %}
+{% else %}
+{{ directive }} = {{ value }}
+{% endif %}
 {% endfor %}
