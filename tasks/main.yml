@@ -3,6 +3,17 @@
 - name: Add the OS specific varibles
   include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Add ppa Repository
+  become: yes
+  when: ansible_os_family == "Debian" and php_fpm_repository is defined
+  register: php_fpm_custom_deb_repository
+  apt_repository: repo={{ php_fpm_repository }}
+
+- name: Update apt
+  become: yes
+  when: ansible_os_family == "Debian" and php_fpm_repository is defined and php_fpm_custom_deb_repository
+  apt: update_cache=yes
+
 - name: Install the php packages (APT)
   apt: >
     name={{ item }}
