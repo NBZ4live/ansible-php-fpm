@@ -7,3 +7,4 @@ php_fpm_binary_name: php-fpm
 php_fpm_service_name: php-fpm
 
 php_fpm_pid_file: /var/run/php-fpm/php-fpm.pid
+php_fpm_error_log: /var/log/php-fpm/php-fpm.log
