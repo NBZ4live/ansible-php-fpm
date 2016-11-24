@@ -1,0 +1,17 @@
+# test.yml
+---
+- hosts: all
+  vars:
+    php_fpm_pools:
+     - name: foo
+       user: www-data
+       group: www-data
+       listen: 8000
+       chdir: /
+     - name: bar
+       user: www-data
+       group: www-data
+       listen: 9000
+       chdir: /
+  roles:
+    - role_under_test
