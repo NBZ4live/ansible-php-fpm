@@ -1,6 +1,7 @@
 ---
-- hosts: localhost
+- hosts: all
   remote_user: root
+  sudo: true
   vars_files:
     - 'vars/main.yml'
     - 'defaults/main.yml'

@@ -1,0 +1,19 @@
+---
+
+- name: Delete the default POOL configuration file
+  file: >
+    path={{ php_fpm_pool_d }}/{{ php_fpm_default_pool.name }}
+    state=absent
+  when: php_fpm_default_pool.delete
+  tags: [configuration,php,fpm]
+
+- name: Copy the POOL configurations
+  template: >
+    src=pool.conf.j2
+    dest={{ php_fpm_pool_d }}/{{ item['name'] }}.conf
+    backup=yes
+  with_items: "{{ php_fpm_pools }}"
+  when: php_fpm_pools|lower != 'none'
+  notify:
+   - restart php-fpm
+  tags: [configuration,php,fpm]

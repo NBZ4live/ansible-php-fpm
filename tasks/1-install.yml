@@ -1,0 +1,26 @@
+---
+
+- name: Add PPA repository (Ubuntu)
+  apt_repository:
+    repo: ppa:ondrej/php
+    update_cache: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: Add DEB repository (Debian)
+  apt_repository: repo='deb https://packages.sury.org/php/ stable main' state=present filename='ondrej'
+  when:
+    - ansible_distribution == "Debian"
+    - ansible_distribution_version >= 8
+
+- name: Install the php packages (APT)
+  apt: >
+    name={{ item }}
+    state=present
+    update_cache=yes
+    cache_valid_time={{ apt_cache_valid_time }}
+  with_items: "{{ php_fpm_apt_packages }}"
+  environment: "{{ env }}"
+  when: ansible_os_family == "Debian"
+  notify:
+     - restart php-fpm
+  tags: [packages,php,fpm]
