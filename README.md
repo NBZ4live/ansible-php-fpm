@@ -5,6 +5,11 @@ php-fpm
 
 This role installs and configures the php-fpm interpreter.
 
+Attention
+---------
+RedHat support is discontinued in version 2.0.0.
+Pull requests are welcome.
+
 Requirements
 ------------
 
