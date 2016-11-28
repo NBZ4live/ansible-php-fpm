@@ -1,0 +1,26 @@
+---
+
+- name: Copy the PHP configuration file
+  ini_file: >
+    dest={{ php_fpm_ini_path }}
+    section="{{ item.section }}"
+    option="{{ item.option }}"
+    value="{{ item.value }}"
+    backup=yes
+  with_items: "{{ php_fpm_ini }}"
+  notify:
+   - restart php-fpm
+  tags: [configuration,php,fpm]
+
+- name: Copy the FPM configuration
+  ini_file: >
+    dest={{ php_fpm_config_path }}
+    section="{{ item.section }}"
+    option="{{ item.option }}"
+    value="{{ item.value }}"
+    backup=yes
+  with_items: "{{ php_fpm_config }}"
+  register: copy_fpm_config
+  notify:
+   - restart php-fpm
+  tags: [configuration,php,fpm]

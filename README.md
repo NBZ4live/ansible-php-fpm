@@ -5,6 +5,11 @@ php-fpm
 
 This role installs and configures the php-fpm interpreter.
 
+Attention
+---------
+RedHat support is discontinued in version 2.0.0.
+Pull requests are welcome.
+
 Requirements
 ------------
 
@@ -15,6 +20,9 @@ Role Variables
 
 The role uses the following variables:
 
+ - **php_fpm_version**: PHP version which should be installed.
+    Available: 5.5, 5.6, 7.0, 7.1. Default: 5.6. Attention: PHP 5.5 can
+    be used, but it has reached it's end of life and should be avoided!
  - **php_fpm_pools**: The list a pools for php-fpm, each pools is a hash with
    a name entry (used for filename), all the other entries in the hash are pool
    directives (see http://php.net/manual/en/install.fpm.configuration.php). One

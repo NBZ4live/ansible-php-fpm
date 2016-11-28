@@ -1,6 +1,12 @@
 ---
 apt_cache_valid_time: 86400
 
+php_fpm_version: 5.6
+
+php_fpm_default_pool:
+  delete: yes
+  name: www.conf
+
 php_fpm_pools:
  - name: foo
    user: www-data
@@ -14,30 +20,19 @@ php_fpm_pool_defaults:
   pm.start_servers: 2
   pm.min_spare_servers: 1
   pm.max_spare_servers: 3
-  pm.status_path: /status
 
 php_fpm_apt_packages:
-  - php5-fpm
-
-php_fpm_yum_packages:
-  - php-fpm
-
-php_fpm_default_pool:
-  delete: yes
-  name: www.conf
+  - php{{php_fpm_version}}-fpm
 
 php_fpm_ini:
  - option: "engine"
    section: "PHP"
-   value: "1"
+   value: "On"
  - option: "error_reporting"
    section: "PHP"
    value: "E_ALL & ~E_DEPRECATED & ~E_STRICT"
  - option: "ldap.max_links"
    section: "ldap"
-   value: "1"
+   value: "-1"
 
-php_fpm_config:
- - option: "error_log"
-   section: "global"
-   value: "/var/log/php5-fpm.log"
+php_fpm_config: []
