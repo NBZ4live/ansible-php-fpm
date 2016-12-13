@@ -58,6 +58,34 @@ env:
     init=/sbin/init
     run_opts=""
     extra_vars="php_fpm_version=7.1"
+  - >
+    container_id=$(mktemp)
+    distribution=debian
+    version=8
+    init=/sbin/init
+    run_opts=""
+    extra_vars="php_fpm_version=5.5"
+  - >
+    container_id=$(mktemp)
+    distribution=debian
+    version=8
+    init=/sbin/init
+    run_opts=""
+    extra_vars="php_fpm_version=5.6"
+  - >
+    container_id=$(mktemp)
+    distribution=debian
+    version=8
+    init=/sbin/init
+    run_opts=""
+    extra_vars="php_fpm_version=7.0"
+  - >
+    container_id=$(mktemp)
+    distribution=debian
+    version=8
+    init=/sbin/init
+    run_opts=""
+    extra_vars="php_fpm_version=7.1"
 
 services:
   - docker
