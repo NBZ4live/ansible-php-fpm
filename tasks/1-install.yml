@@ -6,8 +6,7 @@
     update_cache: true
   when: ansible_distribution == "Ubuntu"
 
-- name: Add DEB repository (Debian)
-  apt_repository: repo='deb https://packages.sury.org/php/ stable main' state=present filename='ondrej'
+- include: 1-install-Debian.yml
   when:
     - ansible_distribution == "Debian"
     - ansible_distribution_version >= 8
