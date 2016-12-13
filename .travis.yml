@@ -23,48 +23,6 @@ env:
     init=/sbin/init
     run_opts=""
     extra_vars="php_fpm_version=7.1"
-  - >
-    container_id=$(mktemp)
-    distribution=ubuntu
-    version=16.04
-    init=/sbin/init
-    run_opts=""
-    extra_vars="php_fpm_version=5.6"
-  - >
-    container_id=$(mktemp)
-    distribution=ubuntu
-    version=16.04
-    init=/sbin/init
-    run_opts=""
-    extra_vars="php_fpm_version=7.0"
-  - >
-    container_id=$(mktemp)
-    distribution=ubuntu
-    version=16.04
-    init=/sbin/init
-    run_opts=""
-    extra_vars="php_fpm_version=7.1"
-  - >
-    container_id=$(mktemp)
-    distribution=debian
-    version=8
-    init=/sbin/init
-    run_opts=""
-    extra_vars="php_fpm_version=5.6"
-  - >
-    container_id=$(mktemp)
-    distribution=debian
-    version=8
-    init=/sbin/init
-    run_opts=""
-    extra_vars="php_fpm_version=7.0"
-  - >
-    container_id=$(mktemp)
-    distribution=debian
-    version=8
-    init=/sbin/init
-    run_opts=""
-    extra_vars="php_fpm_version=7.1"
 
 services:
   - docker
@@ -74,11 +32,11 @@ before_install:
   # Pull container
   - sudo docker pull ${distribution}:${version}
   # Customize container
-  - sudo docker build --rm=true --file=tests/Dockerfile.${distribution}_${version} --tag=${distribution}_${version}:ansible tests
+  - sudo docker build --rm=true --file=tests/Dockerfile.${distribution} --tag=${distribution}:ansible tests
 
 script:
     # Run container in detached state
-  - sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distribution}_${version}:ansible "${init}" > "${container_id}"
+  - sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distribution}:ansible "${init}" > "${container_id}"
 
     # Syntax check
   - sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --extra-vars "${extra_vars}" --syntax-check
