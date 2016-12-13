@@ -6,7 +6,8 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-    config.vm.box = "ubuntu/trusty64"
+     config.vm.box = "ubuntu/trusty64"
+#     config.vm.box = "debian/jessie64"
 
     config.vm.network "public_network"
 
