@@ -74,7 +74,7 @@ before_install:
   # Pull container
   - sudo docker pull ${distribution}:${version}
   # Customize container
-  - sudo docker build --rm=true --file=tests/Dockerfile.${distribution} --tag=${distribution}:ansible tests
+  - sudo docker build --rm=true --file=tests/Dockerfile.${distribution}_${version} --tag=${distribution}:ansible tests
 
 script:
     # Run container in detached state
