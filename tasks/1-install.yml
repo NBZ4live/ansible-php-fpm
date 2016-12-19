@@ -14,7 +14,7 @@
 - name: Install the php packages (APT)
   apt: >
     name={{ item }}
-    state=present
+    state={% if php_fpm_apt_latest is defined and php_fpm_apt_latest == 'yes' %}latest{% else %}present{% endif %}
     update_cache=yes
     cache_valid_time={{ apt_cache_valid_time }}
   with_items: "{{ php_fpm_apt_packages }}"

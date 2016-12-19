@@ -45,6 +45,7 @@ The role uses the following variables:
  - **php_fpm_default_pool**:
      - **delete**: Set to a ```True``` value to delete the default pool.
      - **name**: The filename the default pool configuration file.
+ - **php_fpm_apt_latest**: If set to ```yes``` will update the packages to the latest version
 
 Example configuration
 --------------
