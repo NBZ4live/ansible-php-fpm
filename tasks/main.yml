@@ -14,7 +14,7 @@
   changed_when: "result.rc != 0"
   tags: [configuration,php,fpm]
 
-- name: Start the php5-fpm service
+- name: Start the {{ php_fpm_service_name }} service
   service: name={{ php_fpm_service_name }} state=started enabled=yes
   when: php_fpm_pools|lower != 'none'
   tags: [service,php,fpm]
