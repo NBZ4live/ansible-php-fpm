@@ -8,6 +8,7 @@
     value="{{ item.value }}"
     backup=yes
   with_items: "{{ php_fpm_ini }}"
+  when: php_fpm_ini|length > 0
   notify:
    - restart php-fpm
   tags: [configuration,php,fpm]
@@ -20,6 +21,7 @@
     value="{{ item.value }}"
     backup=yes
   with_items: "{{ php_fpm_config }}"
+  when: php_fpm_config|length > 0
   register: copy_fpm_config
   notify:
    - restart php-fpm

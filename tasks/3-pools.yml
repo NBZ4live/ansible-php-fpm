@@ -13,7 +13,7 @@
     dest={{ php_fpm_pool_d }}/{{ item['name'] }}.conf
     backup=yes
   with_items: "{{ php_fpm_pools }}"
-  when: php_fpm_pools|lower != 'none'
+  when: php_fpm_pools|length > 0
   notify:
    - restart php-fpm
   tags: [configuration,php,fpm]
