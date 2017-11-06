@@ -3,7 +3,7 @@ galaxy_info:
   author: Sergey Fayngold
   company: My.com B.V.
   license: BSD
-  min_ansible_version: 1.4
+  min_ansible_version: 1.8
   platforms:
   - name: Ubuntu
     versions:
