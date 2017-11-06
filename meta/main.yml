@@ -8,9 +8,11 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - trusty
+    - xenial xerus
   - name: Debian
     versions:
-    - wheezy
+    - jessie
+    - stretch
   categories:
   - development
   - web
