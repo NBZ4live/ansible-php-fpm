@@ -1,7 +1,7 @@
 ---
 
 - name: Add the OS specific varibles
-  include_vars: "{{ ansible_os_family }}.yml"
+  include_vars: "{{role_path}}/vars/{{ ansible_os_family }}.yml"
 
 - include: 1-install.yml
 - include: 2-configure.yml

@@ -3,40 +3,118 @@
 sudo: required
 env:
   - >
-    container_id=$(mktemp)
     distribution=ubuntu
     version=14.04
-    init=/sbin/init
-    run_opts=""
     extra_vars="php_fpm_version=5.6"
-  - >
     container_id=$(mktemp)
+    init=/sbin/init
+    build_args=""
+    run_opts=""
+  - >
     distribution=ubuntu
     version=14.04
-    init=/sbin/init
-    run_opts=""
     extra_vars="php_fpm_version=7.0"
-  - >
     container_id=$(mktemp)
+    init=/sbin/init
+    build_args=""
+    run_opts=""
+  - >
     distribution=ubuntu
     version=14.04
-    init=/sbin/init
-    run_opts=""
     extra_vars="php_fpm_version=7.1"
+    container_id=$(mktemp)
+    init=/sbin/init
+    build_args=""
+    run_opts=""
+  - >
+    distribution=ubuntu
+    version=16.04
+    extra_vars="php_fpm_version=5.6"
+    container_id=$(mktemp)
+    init=/sbin/init
+    build_args=""
+    run_opts="--privileged"
+  - >
+    distribution=ubuntu
+    version=16.04
+    extra_vars="php_fpm_version=7.0"
+    container_id=$(mktemp)
+    init=/sbin/init
+    build_args=""
+    run_opts="--privileged"
+  - >
+    distribution=ubuntu
+    version=16.04
+    extra_vars="php_fpm_version=7.1"
+    container_id=$(mktemp)
+    init=/sbin/init
+    build_args=""
+    run_opts="--privileged"
+  - >
+    distribution=debian
+    version=8
+    extra_vars="php_fpm_version=5.6"
+    container_id=$(mktemp)
+    init=/sbin/init
+    build_args=""
+    run_opts="--privileged"
+  - >
+    distribution=debian
+    version=8
+    extra_vars="php_fpm_version=7.0"
+    container_id=$(mktemp)
+    init=/sbin/init
+    build_args=""
+    run_opts="--privileged"
+  - >
+    distribution=debian
+    version=8
+    extra_vars="php_fpm_version=7.1"
+    container_id=$(mktemp)
+    init=/sbin/init
+    build_args=""
+    run_opts="--privileged"
+  - >
+    distribution=debian
+    version=9
+    extra_vars="php_fpm_version=5.6"
+    container_id=$(mktemp)
+    init=/sbin/init
+    build_args="--build-arg additional_packages=systemd-sysv"
+    run_opts="--privileged"
+  - >
+    distribution=debian
+    version=9
+    extra_vars="php_fpm_version=7.0"
+    container_id=$(mktemp)
+    init=/sbin/init
+    build_args="--build-arg additional_packages=systemd-sysv"
+    run_opts="--privileged"
+  - >
+    distribution=debian
+    version=9
+    extra_vars="php_fpm_version=7.1"
+    container_id=$(mktemp)
+    init=/sbin/init
+    build_args="--build-arg additional_packages=systemd-sysv"
+    run_opts="--privileged"
 
 services:
   - docker
 
 before_install:
   - sudo apt-get update
+  # Install latest Docker version to support ARG before FROM
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
   # Pull container
   - sudo docker pull ${distribution}:${version}
   # Customize container
-  - sudo docker build --rm=true --file=tests/Dockerfile.${distribution} --tag=${distribution}:ansible tests
+  - docker version
+  - sudo docker build --rm=true --file=tests/Dockerfile --build-arg image=${distribution}:${version} ${build_args} --tag=${distribution}-${version}:ansible tests
 
 script:
     # Run container in detached state
-  - sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distribution}:ansible "${init}" > "${container_id}"
+  - sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distribution}-${version}:ansible "${init}" >> "${container_id}"
 
     # Syntax check
   - sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --extra-vars "${extra_vars}" --syntax-check
@@ -44,7 +122,7 @@ script:
   - sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --extra-vars "${extra_vars}"
     # Idempotence test
   - >
-    sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --extra-vars "${extra_vars}"
+    sudo docker exec "$(cat ${container_id})" ansible-playbook "/etc/ansible/roles/role_under_test/tests/test.yml" --extra-vars "${extra_vars}"
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)

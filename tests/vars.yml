@@ -1,0 +1,21 @@
+---
+role_path: ".."
+
+nagios_nrpe_server_config:
+  server_port: 5666
+  allowed_hosts: 127.0.0.1
+  command[check_zombie_procs]: /usr/lib/nagios/plugins/check_procs -w 5 -c 10 -s Z
+
+nagios_nrpe_server_commands:
+  - name: check_users
+    line: /usr/lib/nagios/plugins/check_users -w 5 -c 10
+  - name: check_load
+    plugin: check_load
+    args: -w 15,10,5 -c 30,25,20
+  - name: check_hda1
+    plugin: check_disk
+    args: -w 20% -c 10% -p /dev/hda1
+    sudo: true
+nagios_nrpe_server_sudo_commands:
+  - /usr/lib/nagios/plugins/check_procs
+  - check_mysql

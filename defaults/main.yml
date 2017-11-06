@@ -1,7 +1,7 @@
 ---
 apt_cache_valid_time: 86400
 
-php_fpm_version: 5.6
+php_fpm_version: 7.0
 
 php_fpm_default_pool:
   delete: yes
