@@ -33,7 +33,7 @@ env:
     container_id=$(mktemp)
     init=/sbin/init
     build_args=""
-    run_opts=""
+    run_opts="--privileged"
   - >
     distribution=ubuntu
     version=16.04
@@ -41,7 +41,7 @@ env:
     container_id=$(mktemp)
     init=/sbin/init
     build_args=""
-    run_opts=""
+    run_opts="--privileged"
   - >
     distribution=ubuntu
     version=16.04
@@ -49,7 +49,7 @@ env:
     container_id=$(mktemp)
     init=/sbin/init
     build_args=""
-    run_opts=""
+    run_opts="--privileged"
   - >
     distribution=debian
     version=8
