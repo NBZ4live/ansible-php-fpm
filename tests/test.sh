@@ -16,9 +16,11 @@ php_versions="5.6 7.0 7.1"
 force_build="false"
 dry_run="false"
 no_cache="false"
+keep_container="false"
+interactive="false"
 
 # Check the options and override variables
-while getopts d:v:p:tfc option
+while getopts d:v:p:tfcki option
 do
  case "${option}"
  in
@@ -28,6 +30,8 @@ do
  t) dry_run="true";;
  f) force_build="true";;
  c) no_cache="true";;
+ k) keep_container="true";;
+ i) interactive="true";;
  esac
 done
 
@@ -82,7 +86,7 @@ run_test() {
     fi
 
     printf "${COLOR}Run container in detached state (${image})${NC}\n"
-    docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${tag} "${init}" >> "${container_id}"
+    docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:rw ${run_opts} ${tag} "${init}" >> "${container_id}"
 
     printf "${COLOR}Syntax check${NC}\n"
     docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook ${role_path} --extra-vars "${extra_vars}" --syntax-check
@@ -94,9 +98,17 @@ run_test() {
     docker exec "$(cat ${container_id})" ansible-playbook ${role_path} --extra-vars "${extra_vars}" \
     | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
 
-    printf "${COLOR}Clean up (${image})${NC}\n"
-    docker stop "$(cat ${container_id})"
-    docker rm "$(cat ${container_id})"
+    if [ ${interactive} = "true" ]; then
+        docker exec -it "$(cat ${container_id})" bash
+    fi
+
+    if [ ${keep_container} = "true" ]; then
+        cat ${container_id}
+    else
+        printf "${COLOR}Clean up (${image})${NC}\n"
+        docker stop "$(cat ${container_id})"
+        docker rm "$(cat ${container_id})"
+    fi
 }
 
 # Loop to run the test on each defined distribution, os version and PHP version
