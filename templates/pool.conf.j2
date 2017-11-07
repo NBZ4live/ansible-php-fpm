@@ -3,7 +3,19 @@
 
 [{{ item.name }}]
 
-{% for directive, value in ((php_fpm_pool_defaults|default(dict())).items() + item.items()) if directive != "name" %}
+{% set pools_directives = ((php_fpm_pool_defaults|default(dict())).items() + item.items()) %}
+{% set pools_directives_dict = dict(pools_directives) %}
+
+{% if 'listen_host' in pools_directives_dict.keys() and 'listen_port' in pools_directives_dict.keys() %}
+listen = {{ pools_directives_dict['listen_host'] }}:{{ pools_directives_dict['listen_port'] }}
+{% elif 'listen_port' in pools_directives_dict.keys() %}
+listen = {{ pools_directives_dict['listen_port'] }}
+{% elif 'listen' in pools_directives_dict.keys() %}
+listen = {{ pools_directives_dict['listen'] }}
+{% endif %}
+
+
+{% for directive, value in pools_directives if directive not in ("name", "listen", "listen_host", "listen_port") %}
 {% if value is mapping -%}
 {% for key, value2 in value.iteritems() %}
 {{ directive }}[{{ key }}] = {{ value2 }}
