@@ -66,7 +66,10 @@ Example configuration
        - name: bar
          user: www-data
          group: www-data
-         listen: 8001
+         # Add the host and port in separate variables.
+         listen_host: 127.0.0.1
+         # Attention: One of listen_port or listen is required!
+         listen_port: 8001
          env:
            PATH: "/usr/local/bin:/usr/bin:/bin"
            TMPDIR: "/tmp"

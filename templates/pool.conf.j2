@@ -1,14 +1,28 @@
 ;{{ ansible_managed }}
 
-
 [{{ item.name }}]
+{% set pools_directives = php_fpm_pool_defaults | default(dict()) | combine(item) -%}
 
-{% for directive, value in ((php_fpm_pool_defaults|default(dict())).items() + item.items()) if directive != "name" %}
+{% set listen = '' -%}
+{% if 'listen_port' in pools_directives -%}
+    {% if 'listen_host' in pools_directives -%}
+        {% set listen = listen ~ pools_directives['listen_host'] + ':' %}
+    {%- endif %}
+    {% set listen = listen ~ pools_directives['listen_port'] %}
+{% elif 'listen' in pools_directives -%}
+    {% set listen = pools_directives['listen'] %}
+{%- endif %}
+
+{% if listen -%}
+listen={{ listen }}
+{%- endif %}
+
+{% for directive, value in pools_directives.items() if directive not in ("name", "listen", "listen_host", "listen_port") -%}
 {% if value is mapping -%}
-{% for key, value2 in value.iteritems() %}
+{% for key, value2 in value.iteritems() -%}
 {{ directive }}[{{ key }}] = {{ value2 }}
-{% endfor %}
-{% else %}
+{%- endfor %}
+{%- else %}
 {{ directive }} = {{ value }}
 {% endif %}
-{% endfor %}
+{%- endfor %}
