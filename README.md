@@ -75,7 +75,7 @@ Example configuration
            TMPDIR: "/tmp"
          php_admin_value:
            sendmail_path: "/usr/sbin/sendmail -t -i -f www@my.domain.com"
-           error_log = "/var/log/fpm-bar.www.log"
+           error_log: "/var/log/fpm-bar.www.log"
        php_fpm_ini:
        # PHP section directives
        - option: "engine"
