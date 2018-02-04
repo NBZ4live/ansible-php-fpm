@@ -1,0 +1,7 @@
+---
+
+- name: Make sure php-fpm package is installed
+  package:
+    name=php-fpm
+    state=present
+    update_cache=yes

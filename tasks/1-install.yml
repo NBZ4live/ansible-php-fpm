@@ -23,3 +23,8 @@
   notify:
      - restart php-fpm
   tags: [packages,php,fpm]
+
+- include: 1-install-Archlinux.yml
+  when:
+    - ansible_distribution == "Archlinux"
+
