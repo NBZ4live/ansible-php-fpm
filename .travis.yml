@@ -98,6 +98,12 @@ env:
     init=/sbin/init
     build_args="--build-arg additional_packages=systemd-sysv"
     run_opts="--privileged"
+  - >
+    distribution=base/archlinux
+    version=latest
+    extra_vars="php_fpm_version=7.2"
+    container_id=$(mktemp)
+    run_opts="--privileged"
 
 services:
   - docker
