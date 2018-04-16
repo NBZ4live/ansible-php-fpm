@@ -9,7 +9,7 @@
 - include: 1-install-Debian.yml
   when:
     - ansible_distribution == "Debian"
-    - ansible_distribution_version >= 8
+    - ansible_distribution_version|int >= 8
 
 - name: Install the php packages (APT)
   apt: >
