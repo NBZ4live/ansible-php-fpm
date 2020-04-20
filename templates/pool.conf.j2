@@ -19,7 +19,7 @@ listen={{ listen }}
 
 {% for directive, value in pools_directives.items() if directive not in ("name", "listen", "listen_host", "listen_port") -%}
 {% if value is mapping %}
-{% for key, value2 in value.iteritems() %}
+{% for key, value2 in value.items() %}
 {{ directive }}[{{ key }}] = {{ value2 }}
 {% endfor %}
 {% else %}
