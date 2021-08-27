@@ -1,0 +1,8 @@
+---
+
+- name: "install php-fpm (RedHat)"
+  package:
+    name:
+      - php-fpm 
+      - php-mbstring 
+      - php-gd

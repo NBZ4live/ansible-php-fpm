@@ -11,6 +11,12 @@
     - ansible_distribution == "Debian"
     - ansible_distribution_version|int >= 8
 
+
+- include: 1-install-RedHat.yml
+  when:
+    - ansible_facts['os_family'] == "RedHat" # CentOS 8, CentOS 7,Fedora 33, Amazon Linux 2, e.t.c
+    - ansible_distribution_version|int >= 8
+
 - name: Install the php packages (APT)
   apt: >
     name={{ item }}
